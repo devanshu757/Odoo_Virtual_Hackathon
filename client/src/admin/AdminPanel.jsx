@@ -1,49 +1,61 @@
+// File: client/src/pages/AdminPanel.jsx
 import { useEffect, useState } from 'react';
-import { getPendingItems, approveItem, rejectItem } from '../services/adminService';
-import { useAuth } from '../context/AuthContext';
+import { getAllUsers, getAllItems } from '../services/adminService';
+import './AdminPanel.css';
 
 export default function AdminPanel() {
-  const { user } = useAuth();
-  const [pendingItems, setPendingItems] = useState([]);
-
-  const fetchPending = async () => {
-    const res = await getPendingItems(user.token);
-    setPendingItems(res.data);
-  };
+  const [users, setUsers] = useState([]);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetchPending();
+    const fetchData = async () => {
+      const usersRes = await getAllUsers();
+      const itemsRes = await getAllItems();
+      setUsers(usersRes.data);
+      setItems(itemsRes.data);
+    };
+    fetchData();
   }, []);
 
-  const handleApprove = async (id) => {
-    await approveItem(id, user.token);
-    fetchPending();
-  };
-
-  const handleReject = async (id) => {
-    await rejectItem(id, user.token);
-    fetchPending();
-  };
-
   return (
-    <div className="p-8">
-      <h2 className="text-2xl font-semibold mb-4">Pending Item Listings</h2>
-      {pendingItems.length === 0 ? (
-        <p>No pending items.</p>
-      ) : (
-        <ul className="space-y-4">
-          {pendingItems.map(item => (
-            <li key={item._id} className="border p-4 rounded">
-              <h3 className="text-lg font-bold">{item.title}</h3>
-              <p>{item.description}</p>
-              <div className="space-x-2 mt-2">
-                <button onClick={() => handleApprove(item._id)} className="bg-green-500 text-white px-4 py-1 rounded">Approve</button>
-                <button onClick={() => handleReject(item._id)} className="bg-red-500 text-white px-4 py-1 rounded">Reject</button>
-              </div>
-            </li>
+    <div className="admin-panel">
+      <h2 className="admin-heading">Admin Dashboard</h2>
+
+      <section className="admin-section">
+        <h3>All Users</h3>
+        <div className="admin-table">
+          <div className="admin-row admin-header">
+            <span>Name</span>
+            <span>Email</span>
+            <span>Role</span>
+          </div>
+          {users.map(user => (
+            <div key={user._id} className="admin-row">
+              <span>{user.name}</span>
+              <span>{user.email}</span>
+              <span>{user.role}</span>
+            </div>
           ))}
-        </ul>
-      )}
+        </div>
+      </section>
+
+      <section className="admin-section">
+        <h3>All Items</h3>
+        <div className="admin-table">
+          <div className="admin-row admin-header">
+            <span>Title</span>
+            <span>Owner</span>
+            <span>Status</span>
+          </div>
+          {items.map(item => (
+            <div key={item._id} className="admin-row">
+              <span>{item.title}</span>
+              <span>{item.owner?.name || 'N/A'}</span>
+              <span>{item.status || 'Pending'}</span>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

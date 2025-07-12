@@ -1,0 +1,2 @@
+/* File: client/src/pages/Signup.css */
+@import './Login.css'; /* Reuse shared styles from login for consistency */

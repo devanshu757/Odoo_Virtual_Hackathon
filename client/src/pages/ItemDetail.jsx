@@ -1,24 +1,33 @@
-import { useEffect, useState } from 'react';
+// File: client/src/pages/ItemDetail.jsx
 import { useParams } from 'react-router-dom';
-import { fetchItemById } from '../services/itemService';
+import { useEffect, useState } from 'react';
+import { getItemById } from '../services/itemService';
+import './ItemDetail.css';
 
 export default function ItemDetail() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
 
   useEffect(() => {
-    fetchItemById(id).then(res => setItem(res.data));
+    const fetchItem = async () => {
+      const res = await getItemById(id);
+      setItem(res.data);
+    };
+    fetchItem();
   }, [id]);
 
-  if (!item) return <p className="p-8">Loading...</p>;
+  if (!item) return <div className="loading">Loading...</div>;
 
   return (
-    <div className="p-8">
-      <h2 className="text-2xl font-bold mb-2">{item.title}</h2>
-      <img src={item.image} alt={item.title} className="w-full max-w-md" />
-      <p className="mt-2">Size: {item.size}</p>
-      <p>Condition: {item.condition}</p>
-      <p className="mt-4">{item.description}</p>
+    <div className="item-detail-container">
+      <img src={item.image} alt={item.title} className="item-detail-image" />
+      <div className="item-detail-content">
+        <h2 className="item-detail-title">{item.title}</h2>
+        <p className="item-detail-meta">
+          <strong>Size:</strong> {item.size} &nbsp;|&nbsp; <strong>Condition:</strong> {item.condition}
+        </p>
+        <p className="item-detail-description">{item.description}</p>
+      </div>
     </div>
   );
 }
