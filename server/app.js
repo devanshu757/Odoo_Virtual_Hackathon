@@ -12,6 +12,12 @@ if (!process.env.MONGO_URI || !process.env.JWT_SECRET) {
   process.exit(1);
 }
 
+// Debugging middleware
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.url}`);
+  next();
+});
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected successfully'))
