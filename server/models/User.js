@@ -1,11 +1,33 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: { type: String, unique: true },
-  password: String,
-  points: { type: Number, default: 0 },
-  role: { type: String, default: 'user' }
+const UserSchema = new Schema({
+    name: {
+        type: String, 
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    points: {
+        type: Number,
+        default: 100,
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    },
+    date: {
+        type: Date,
+        default: Date.now,
+    },
 });
-
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model("User", UserSchema);
+User.createIndexes();
+module.exports = User;
