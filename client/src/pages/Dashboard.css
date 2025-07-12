@@ -1,0 +1,27 @@
+/* File: client/src/pages/Dashboard.css */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 24px;
+  }
+  
+  .dashboard-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 32px;
+    color: #1f2937;
+  }
+  
+  .dashboard-items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  
+  .dashboard-empty {
+    text-align: center;
+    color: #6b7280;
+    font-size: 1.1rem;
+    margin-top: 40px;
+  }
+  

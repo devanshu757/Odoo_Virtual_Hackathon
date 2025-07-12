@@ -1,0 +1,78 @@
+/* File: ItemCard.css */
+
+.item-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .item-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  }
+  
+  .item-card-image-container {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  
+  .item-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: scale 0.3s ease;
+  }
+  
+  .item-card:hover .item-card-image {
+    scale: 1.05;
+  }
+  
+  .item-card-content {
+    padding: 16px;
+  }
+  
+  .item-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #111827;
+  }
+  
+  .item-card-meta {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 10px;
+  }
+  
+  .item-card-label {
+    font-weight: 500;
+    color: #374151;
+  }
+  
+  .item-card-description {
+    font-size: 0.95rem;
+    color: #4b5563;
+    margin-bottom: 12px;
+  }
+  
+  .item-card-link {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #3b82f6;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .item-card-link:hover {
+    color: #2563eb;
+    text-decoration: underline;
+  }
+  

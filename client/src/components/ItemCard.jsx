@@ -1,12 +1,25 @@
 import { Link } from 'react-router-dom';
+import './ItemCard.css';
 
 export default function ItemCard({ item }) {
   return (
-    <div className="border rounded p-4 shadow hover:shadow-lg">
-      <img src={item.image} alt={item.title} className="w-full h-48 object-cover mb-2" />
-      <h3 className="text-lg font-semibold">{item.title}</h3>
-      <p className="text-sm text-gray-500">Size: {item.size} | Condition: {item.condition}</p>
-      <Link to={`/item/${item._id}`} className="text-blue-500 underline mt-2 inline-block">View Details</Link>
+    <div className="item-card">
+      <div className="item-card-image-container">
+        <img src={item.image} alt={item.title} className="item-card-image" />
+      </div>
+      <div className="item-card-content">
+        <h3 className="item-card-title">{item.title}</h3>
+        <p className="item-card-meta">
+          <span className="item-card-label">Size:</span> {item.size} &nbsp;|&nbsp; 
+          <span className="item-card-label">Condition:</span> {item.condition}
+        </p>
+        <p className="item-card-description">
+          {item.description.length > 80 ? item.description.slice(0, 80) + '...' : item.description}
+        </p>
+        <Link to={`/item/${item._id}`} className="item-card-link">
+          View Details →
+        </Link>
+      </div>
     </div>
   );
 }

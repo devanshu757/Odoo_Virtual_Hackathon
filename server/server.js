@@ -1,27 +1,35 @@
-const connectToMongo = require("./db");
-const express = require("express");
-const dotenv = require("dotenv");
-var cors = require("cors");
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
 
-dotenv.config();
-
-connectToMongo();
+// Middleware
 const app = express();
-const port = 7000;
-
 app.use(cors());
-
 app.use(express.json());
 
-app.use('/uploads', express.static('uploads'));
+// Route imports
+const authRoutes = require('./routes/authRoutes');
+const itemRoutes = require('./routes/itemRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
-// Available routes
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/items', require('./routes/itemRoutes'));
-app.use('/api/admin', require('./routes/adminRoutes'));
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/items', itemRoutes);
+app.use('/api/admin', adminRoutes);
 
-const PORT = process.env.PORT || 7000;
+// DB + Server
+if (!process.env.MONGO_URI || !process.env.JWT_SECRET) {
+  console.error('Missing MONGO_URI or JWT_SECRET');
+  process.exit(1);
+}
 
-app.listen(PORT, () => {
-    console.log(`rewear backend listening on port ${port}`);
-});
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+  })
+  .catch(err => {
+    console.error('MongoDB connection error:', err.message);
+    process.exit(1);
+  });

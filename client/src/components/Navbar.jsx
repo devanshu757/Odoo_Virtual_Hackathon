@@ -1,27 +1,30 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import './Navbar.css';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
 
   return (
-    <nav className="bg-blue-700 text-white p-4 flex justify-between">
-      <Link to="/" className="font-bold">ReWear</Link>
-      <div className="space-x-4">
+    <nav className="navbar">
+      <div className="navbar-brand">
+        <Link to="/" className="navbar-logo"> ReWear</Link>
+      </div>
+      <ul className="navbar-links">
         {user ? (
           <>
-            <Link to="/dashboard">Dashboard</Link>
-            <Link to="/add">Add Item</Link>
-            {user.role === 'admin' && <Link to="/admin">Admin</Link>}
-            <button onClick={logout} className="underline">Logout</button>
+            <li><Link to="/dashboard">Dashboard</Link></li>
+            <li><Link to="/add">Add Item</Link></li>
+            {user.role === 'admin' && <li><Link to="/admin">Admin</Link></li>}
+            <li><button onClick={logout} className="navbar-button">Logout</button></li>
           </>
         ) : (
           <>
-            <Link to="/signup">Signup</Link>
-            <Link to="/login">Login</Link>
+            <li><Link to="/signup">Signup</Link></li>
+            <li><Link to="/login">Login</Link></li>
           </>
         )}
-      </div>
+      </ul>
     </nav>
   );
 }

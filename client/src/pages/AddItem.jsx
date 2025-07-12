@@ -1,7 +1,9 @@
+// File: client/src/pages/AddItem.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { addItem } from '../services/itemService';
+import './AddItem.css';
 
 export default function AddItem() {
   const { user } = useAuth();
@@ -13,6 +15,11 @@ export default function AddItem() {
     condition: '',
     image: ''
   });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,15 +33,50 @@ export default function AddItem() {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-4">
-      <h2 className="text-2xl font-semibold mb-4">Add New Item</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input className="w-full p-2 border" placeholder="Title" onChange={(e) => setForm({ ...form, title: e.target.value })} />
-        <input className="w-full p-2 border" placeholder="Description" onChange={(e) => setForm({ ...form, description: e.target.value })} />
-        <input className="w-full p-2 border" placeholder="Size" onChange={(e) => setForm({ ...form, size: e.target.value })} />
-        <input className="w-full p-2 border" placeholder="Condition" onChange={(e) => setForm({ ...form, condition: e.target.value })} />
-        <input className="w-full p-2 border" placeholder="Image URL" onChange={(e) => setForm({ ...form, image: e.target.value })} />
-        <button className="bg-blue-600 text-white w-full p-2">Submit</button>
+    <div className="add-item-container">
+      <h2 className="add-item-title">Add New Clothing Item</h2>
+      <form onSubmit={handleSubmit} className="add-item-form">
+        <input
+          className="add-item-input"
+          name="title"
+          placeholder="Title"
+          value={form.title}
+          onChange={handleChange}
+          required
+        />
+        <textarea
+          className="add-item-input"
+          name="description"
+          placeholder="Description"
+          value={form.description}
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="add-item-input"
+          name="size"
+          placeholder="Size (e.g., S, M, L)"
+          value={form.size}
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="add-item-input"
+          name="condition"
+          placeholder="Condition (e.g., New, Gently Used)"
+          value={form.condition}
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="add-item-input"
+          name="image"
+          placeholder="Image URL"
+          value={form.image}
+          onChange={handleChange}
+          required
+        />
+        <button className="add-item-button" type="submit">Submit Listing</button>
       </form>
     </div>
   );

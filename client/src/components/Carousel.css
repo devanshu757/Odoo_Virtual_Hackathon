@@ -1,0 +1,35 @@
+.carousel-container {
+    width: 100%;
+    background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .carousel-content {
+    text-align: center;
+    max-width: 800px;
+  }
+  
+  .carousel-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+  }
+  
+  .carousel-subtext {
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+  }
+  
+  .carousel-placeholder {
+    padding: 20px;
+    border: 2px dashed #bdc3c7;
+    border-radius: 8px;
+    background-color: #ecf0f1;
+    color: #95a5a6;
+    font-style: italic;
+  }
+  
